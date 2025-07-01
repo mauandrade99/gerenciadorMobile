@@ -18,4 +18,10 @@ buildscript {
     }
 }
 
+allprojects {
+    project.ext.vectoricons = [
+        iconFontNames: [ 'FontAwesome.ttf' ]
+    ]
+}
+
 apply plugin: "com.facebook.react.rootproject"

@@ -1,0 +1,25 @@
+cd\JavaProjects\GerenciadorMobile
+git init
+git remote add origin https://github.com/mauandrade99/GerenciadorMobile
+
+cd\JavaProjects\GerenciadorMobile
+git init
+git add .
+git commit -m "GerenciadorMobile development 1.0"
+git branch -M main
+git push -u origin main
+
+
+cd\JavaProjects\GerenciadorMobile
+
+
+
+npm start
+
+cd android
+gradlew.bat clean
+cd..
+npm start -- --reset-cache
+
+
+
