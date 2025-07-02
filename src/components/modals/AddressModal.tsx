@@ -43,7 +43,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
         if (data.erro) throw new Error();
         setFormData(prev => ({ ...prev, logradouro: data.logradouro, bairro: data.bairro, cidade: data.localidade, estado: data.uf }));
       } catch (error) {
-        Toast.show({type: 'error', text1: "CEP não encontrado.",  position: 'bottom', visibilityTime: 6000, });
+        Toast.show({type: 'error', text1: "CEP não encontrado.", });
       } finally {
         setIsCepLoading(false);
       }
@@ -52,11 +52,11 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
 
   const handleSubmit = async () => {
     if (!userId || !formData.cep || !formData.numero) {
-      Toast.show({type: 'error', text1: "CEP e Número são obrigatórios.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "CEP e Número são obrigatórios.", });
       return;
     }
     setIsSaving(true);
-    const payload: AddressPayload = { cep: formData.cep, numero: formData.numero, complemento: formData.complemento, frontendOrigin: 3 };
+    const payload: AddressPayload = { cep: formData.cep, numero: formData.numero, complemento: formData.complemento, frontendOrigin: 4 };
     try {
       if (isEditing && addressToEdit) {
         await updateAddress(userId, addressToEdit.id, payload);
@@ -65,7 +65,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
       }
       onSuccess();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível salvar o endereço.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "Não foi possível salvar o endereço.", });
     } finally {
       setIsSaving(false);
     }

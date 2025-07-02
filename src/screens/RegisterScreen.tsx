@@ -30,22 +30,27 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
 
   const handleRegister = async () => {
     if (!nome || !email || !senha || !confirmarSenha) {
-      Toast.show({type: 'error', text1: "Todos os campos são obrigatórios.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "Todos os campos são obrigatórios.", });
       return;
     }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Toast.show({ type: 'error', text1: 'Por favor, insira um formato de email válido.', });
+      return;
+    }
+
     if (senha !== confirmarSenha) {
-      Toast.show({type: 'error', text1: "As senhas não coincidem.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "As senhas não coincidem.", });
       return;
     }
 
     setIsLoading(true);
     try {
       const data = await registerUser({ nome, email, senha });
-      // Após o registro, faz o login automático
       await auth.login(data.token);
-      // A navegação para o dashboard será automática devido à mudança de estado
     } catch (err: any) {
-      Toast.show({type: 'error', text1: err.response?.data?.message || "Não foi possível criar a conta.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: err.response?.data?.message || "Não foi possível criar a conta.", });
     } finally {
       setIsLoading(false);
     }
@@ -127,7 +132,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
   );
 };
 
-// Reutilizamos muitos estilos globais, mas adicionamos alguns específicos
+
 const styles = StyleSheet.create({
   keyboardView: { flex: 1 },
   container: {

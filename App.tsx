@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, View } from 'react-native';
-import Toast from 'react-native-toast-message';
+import Toast, { BaseToast, BaseToastProps, ErrorToast } from 'react-native-toast-message';
 
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -58,6 +58,24 @@ const RootNavigator = () => {
   return isAuthenticated ? <AppNavigator /> : <AuthNavigator />;
 };
 
+const toastConfig = {
+
+  success: (props: React.JSX.IntrinsicAttributes & BaseToastProps) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: 'green', zIndex: 9999 }} // zIndex alto
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+    />
+  ),
+
+  error: (props: React.JSX.IntrinsicAttributes & BaseToastProps) => (
+    <ErrorToast
+      {...props}
+      style={{ borderLeftColor: 'red', zIndex: 9999 }} // zIndex alto
+    />
+  ),
+};
+
 
 function App(): React.JSX.Element {
   return (
@@ -65,7 +83,11 @@ function App(): React.JSX.Element {
       <NavigationContainer>
         <RootNavigator />
       </NavigationContainer>
-      <Toast />
+      <Toast  config={toastConfig}
+              position='top'      
+              topOffset={50}        
+              visibilityTime={6000} 
+      />
     </AuthProvider>
   );
 }

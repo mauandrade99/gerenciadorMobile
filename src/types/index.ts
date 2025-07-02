@@ -46,14 +46,14 @@ export interface AddressPayload {
   cep: string;
   numero: string;
   complemento?: string;
-  frontendOrigin: 3; // Conforme requisito
+  frontendOrigin: 4; 
 }
 
 // Payload para atualizar um usuário
 export interface UserUpdatePayload {
   nome: string;
   role: 'ROLE_USER' | 'ROLE_ADMIN';
-  frontendOrigin: 3; // Conforme requisito
+  frontendOrigin: 4; 
 }
 
 // Estrutura para busca de CEP (ViaCEP)

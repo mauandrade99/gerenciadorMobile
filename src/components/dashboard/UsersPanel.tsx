@@ -15,9 +15,10 @@ interface UsersPanelProps {
   selectedUserId?: number | null;
   onSelectUser: (user: User) => void;
   onRefresh: () => void;
+  loggedInUserId?: number | null;
 }
 
-const UsersPanel = ({ usersPage, isLoading, selectedUserId, onSelectUser, onRefresh }: UsersPanelProps) => {
+const UsersPanel = ({ usersPage, isLoading, selectedUserId, onSelectUser, onRefresh, loggedInUserId }: UsersPanelProps) => {
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
 
@@ -39,7 +40,7 @@ const UsersPanel = ({ usersPage, isLoading, selectedUserId, onSelectUser, onRefr
       closeDeleteModal();
       onRefresh();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível excluir o usuário.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "Não foi possível excluir o usuário.", });
       closeDeleteModal();
     }
   };
@@ -57,9 +58,11 @@ const UsersPanel = ({ usersPage, isLoading, selectedUserId, onSelectUser, onRefr
         <TouchableOpacity style={styles.iconButton} onPress={() => openEditModal(item)}>
           <Icon name="pen" size={16} color={Colors.primary} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton} onPress={() => openDeleteModal(item)}>
-          <Icon name="trash" size={16} color={Colors.danger} />
-        </TouchableOpacity>
+        {loggedInUserId !== item.id && (
+          <TouchableOpacity style={styles.iconButton} onPress={() => openDeleteModal(item)}>
+            <Icon name="trash" size={16} color={Colors.danger} />
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );

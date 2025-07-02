@@ -7,7 +7,6 @@ import { getAddressesByUserId } from '../services/addressService';
 import { globalStyles, Colors } from '../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-// Importe os painéis que vamos criar
 import UsersPanel from '../components/dashboard/UsersPanel';
 import AddressesPanel from '../components/dashboard/AddressesPanel';
 
@@ -23,7 +22,7 @@ const DashboardScreen = () => {
     if (!isAdmin) return;
     setIsLoadingUsers(true);
     try {
-      const data = await getUsers(page, 10);
+      const data = await getUsers(page, 500);  // sem paginação!!!
       setUsersPage(data);
     } catch (error) { console.error("Erro ao buscar usuários:", error); }
     finally { setIsLoadingUsers(false); }
@@ -85,6 +84,7 @@ const DashboardScreen = () => {
                 onSelectUser={setSelectedUser}
                 selectedUserId={selectedUser?.id}
                 onRefresh={fetchUsers}
+                loggedInUserId={loggedInUser?.id}
               />
             </View>
             <View style={styles.panelContainer}>
@@ -112,7 +112,7 @@ const DashboardScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.background, // A cor de fundo vai para a área segura
+    backgroundColor: Colors.background, 
   },
   header: {
     flexDirection: 'row',
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   panelContainer: {
-    flex: 1, // Cada painel ocupa metade da tela
+    flex: 1, 
   },
   logoutButton: {
-    padding: 8, // Aumenta a área clicável ao redor do ícone
+    padding: 8, 
     justifyContent: 'center',
     alignItems: 'center',
   },

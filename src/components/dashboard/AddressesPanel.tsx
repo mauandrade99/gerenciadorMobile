@@ -51,7 +51,7 @@ const AddressesPanel = ({ selectedUser, addresses, isLoading, onRefresh }: Addre
       closeDeleteModal();
       onRefresh();
     } catch (error) {
-      Toast.show({ type: 'error', text1: 'Não foi possível excluir o endereço.',  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({ type: 'error', text1: 'Não foi possível excluir o endereço.', });
       closeDeleteModal();
     }
   };

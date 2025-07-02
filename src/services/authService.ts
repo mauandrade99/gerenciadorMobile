@@ -20,6 +20,6 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
 };
 
 export const registerUser = async (payload: RegisterPayload): Promise<AuthResponse> => {
-  const response = await api.post<AuthResponse>('/api/auth/register', { ...payload, frontendOrigin: 3 });
+  const response = await api.post<AuthResponse>('/api/auth/register', { ...payload, frontendOrigin: 4 });
   return response.data;
 };

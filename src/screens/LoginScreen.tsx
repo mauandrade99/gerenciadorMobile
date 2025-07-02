@@ -31,26 +31,22 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const auth = useAuth(); // Pegue o contexto de autenticação
+  const auth = useAuth(); 
 
-  // TODO: Conectar com o useAuth para a lógica de login real
+
   const handleLogin = async () => {
     if (!email || !senha) {
-      Toast.show({type: 'error', text1: "Por favor, preencha o email e a senha.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "Por favor, preencha o email e a senha.", });
       return;
     }
     setIsLoading(true);
     try {
-      // 1. Chama o serviço da API
       const data = await loginUser({ email, senha });
 
-      // 2. Chama a função de login do nosso contexto, que vai atualizar o estado global
       await auth.login(data.token);
 
-      // 3. NÃO há mais navigation.navigate() aqui. A navegação é automática.
-
     } catch (err: any) {
-      Toast.show({type: 'error', text1: err.response?.data?.message || "Credenciais inválidas.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: err.response?.data?.message || "Credenciais inválidas.", });
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +72,6 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
             placeholderTextColor={Colors.subtleText}
           />
 
-          {/* Campo de Senha com Ícone */}
           <View style={styles.passwordContainer}>
             <TextInput
               style={styles.inputWithIcon}
@@ -118,7 +113,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   );
 };
 
-// Estilos específicos para esta tela, complementando os globais
+
 const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
@@ -126,7 +121,6 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // Reutiliza o estilo do input global, mas sem a margem inferior
     backgroundColor: Colors.card,
     borderWidth: 1,
     borderColor: Colors.border,
@@ -134,7 +128,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   inputWithIcon: {
-    // Removemos o estilo visual do TextInput para que o container o controle
     flex: 1,
     padding: 15,
     fontSize: 16,
@@ -152,7 +145,6 @@ const styles = StyleSheet.create({
     color: Colors.subtleText,
     fontSize: 14,
   },
-  // Placeholder para o ActivityIndicator ter a mesma altura do botão
   buttonPlaceholder: {
     padding: 18,
     marginTop: 10,

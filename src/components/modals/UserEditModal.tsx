@@ -29,16 +29,16 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
 
   const handleSubmit = async () => {
     if (!userToEdit || !nome) {
-      Toast.show({type: 'error', text1: "O nome do usuário é obrigatório.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "O nome do usuário é obrigatório.",});
       return;
     }
     setIsSaving(true);
-    const payload: UserUpdatePayload = { nome, role, frontendOrigin: 3 };
+    const payload: UserUpdatePayload = { nome, role, frontendOrigin: 4 };
     try {
       await updateUser(userToEdit.id, payload);
       onSuccess();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível atualizar o usuário.",  position: 'bottom', visibilityTime: 6000, });
+      Toast.show({type: 'error', text1: "Não foi possível atualizar o usuário.", });
     } finally {
       setIsSaving(false);
     }
