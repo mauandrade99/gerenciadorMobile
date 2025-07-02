@@ -1,6 +1,6 @@
 cd\JavaProjects\GerenciadorMobile
 git init
-git remote add origin https://github.com/mauandrade99/GerenciadorMobile
+git remote add origin https://github.com/mauandrade99/gerenciadorMobile
 
 cd\JavaProjects\GerenciadorMobile
 git init
@@ -12,8 +12,6 @@ git push -u origin main
 
 cd\JavaProjects\GerenciadorMobile
 
-
-
 npm start
 
 cd android
@@ -21,5 +19,11 @@ gradlew.bat clean
 cd..
 npm start -- --reset-cache
 
+
+cd\JavaProjects\GerenciadorMobile\android
+gradlew.bat assembleRelease
+
+cd\JavaProjects\GerenciadorMobile\android
+npm run android
 
 

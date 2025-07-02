@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, 
 import type { User, Address } from '../../types';
 import { Colors } from '../../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-toast-message';
 
 import { deleteAddress } from '../../services/addressService';
 import ConfirmModal from '../modals/ConfirmModal';
@@ -50,7 +51,7 @@ const AddressesPanel = ({ selectedUser, addresses, isLoading, onRefresh }: Addre
       closeDeleteModal();
       onRefresh();
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível excluir o endereço.");
+      Toast.show({ type: 'error', text1: 'Não foi possível excluir o endereço.',  position: 'bottom', visibilityTime: 6000, });
       closeDeleteModal();
     }
   };

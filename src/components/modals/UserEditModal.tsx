@@ -6,6 +6,7 @@ import { Picker } from '@react-native-picker/picker'; // Usaremos o Picker padr�
 import { Colors, globalStyles } from '../../theme/appStyles';
 import type { User, UserUpdatePayload } from '../../types';
 import { updateUser } from '../../services/userService';
+import Toast from 'react-native-toast-message';
 
 interface UserEditModalProps {
   visible: boolean;
@@ -28,7 +29,7 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
 
   const handleSubmit = async () => {
     if (!userToEdit || !nome) {
-      Alert.alert("Erro", "O nome do usuário é obrigatório.");
+      Toast.show({type: 'error', text1: "O nome do usuário é obrigatório.",  position: 'bottom', visibilityTime: 6000, });
       return;
     }
     setIsSaving(true);
@@ -37,7 +38,7 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
       await updateUser(userToEdit.id, payload);
       onSuccess();
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível atualizar o usuário.");
+      Toast.show({type: 'error', text1: "Não foi possível atualizar o usuário.",  position: 'bottom', visibilityTime: 6000, });
     } finally {
       setIsSaving(false);
     }
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonContainer: { flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginTop: 20 },
-  button: { padding: 15, borderRadius: 8, flex: 1, alignItems: 'center', marginHorizontal: 5 },
+  button: { padding: 18, borderRadius: 8, flex: 1, alignItems: 'center', marginTop: 10 },
   cancelButton: { backgroundColor: '#e0e0e0' },
   saveButton: { flex: 1 },
 });

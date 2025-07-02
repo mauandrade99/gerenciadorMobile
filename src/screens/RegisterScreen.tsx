@@ -7,6 +7,7 @@ import { globalStyles, Colors } from '../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../hooks/useAuth';
 import { registerUser } from '../services/authService';
+import Toast from 'react-native-toast-message';
 
 type RegisterScreenProps = {
   navigation: {
@@ -29,11 +30,11 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
 
   const handleRegister = async () => {
     if (!nome || !email || !senha || !confirmarSenha) {
-      Alert.alert("Erro de Validação", "Todos os campos são obrigatórios.");
+      Toast.show({type: 'error', text1: "Todos os campos são obrigatórios.",  position: 'bottom', visibilityTime: 6000, });
       return;
     }
     if (senha !== confirmarSenha) {
-      Alert.alert("Erro de Validação", "As senhas não coincidem.");
+      Toast.show({type: 'error', text1: "As senhas não coincidem.",  position: 'bottom', visibilityTime: 6000, });
       return;
     }
 
@@ -44,7 +45,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
       await auth.login(data.token);
       // A navegação para o dashboard será automática devido à mudança de estado
     } catch (err: any) {
-      Alert.alert("Falha no Registro", err.response?.data?.message || "Não foi possível criar a conta.");
+      Toast.show({type: 'error', text1: err.response?.data?.message || "Não foi possível criar a conta.",  position: 'bottom', visibilityTime: 6000, });
     } finally {
       setIsLoading(false);
     }

@@ -5,6 +5,7 @@ import {
 import { Colors, globalStyles } from '../../theme/appStyles';
 import type { Address, AddressPayload } from '../../types';
 import { createAddress, updateAddress, getAddressByCep } from '../../services/addressService';
+import Toast from 'react-native-toast-message';
 
 interface AddressModalProps {
   visible: boolean;
@@ -42,7 +43,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
         if (data.erro) throw new Error();
         setFormData(prev => ({ ...prev, logradouro: data.logradouro, bairro: data.bairro, cidade: data.localidade, estado: data.uf }));
       } catch (error) {
-        Alert.alert("Erro", "CEP não encontrado.");
+        Toast.show({type: 'error', text1: "CEP não encontrado.",  position: 'bottom', visibilityTime: 6000, });
       } finally {
         setIsCepLoading(false);
       }
@@ -51,7 +52,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
 
   const handleSubmit = async () => {
     if (!userId || !formData.cep || !formData.numero) {
-      Alert.alert("Erro", "CEP e Número são obrigatórios.");
+      Toast.show({type: 'error', text1: "CEP e Número são obrigatórios.",  position: 'bottom', visibilityTime: 6000, });
       return;
     }
     setIsSaving(true);
@@ -64,7 +65,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
       }
       onSuccess();
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível salvar o endereço.");
+      Toast.show({type: 'error', text1: "Não foi possível salvar o endereço.",  position: 'bottom', visibilityTime: 6000, });
     } finally {
       setIsSaving(false);
     }
@@ -133,9 +134,10 @@ const styles = StyleSheet.create({
   cepContainer: { flexDirection: 'row', alignItems: 'center' },
   cepInput: { flex: 1, marginRight: 10 },
   buttonContainer: { flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginTop: 20 },
-  button: { padding: 15, borderRadius: 8, flex: 1, alignItems: 'center', marginHorizontal: 5 },
+  button: { padding: 18, borderRadius: 8, flex: 1, alignItems: 'center', marginTop: 10 },
   cancelButton: { backgroundColor: '#e0e0e0' },
   saveButton: { flex: 1 },
 });
 
 export default AddressModal;
+

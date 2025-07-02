@@ -14,6 +14,7 @@ import {
 
 import { useAuth } from '../hooks/useAuth'; 
 import { loginUser } from '../services/authService'; 
+import Toast from 'react-native-toast-message';
 
 import { globalStyles, Colors } from '../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -35,7 +36,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   // TODO: Conectar com o useAuth para a lógica de login real
   const handleLogin = async () => {
     if (!email || !senha) {
-      Alert.alert("Erro de Validação", "Por favor, preencha o email e a senha.");
+      Toast.show({type: 'error', text1: "Por favor, preencha o email e a senha.",  position: 'bottom', visibilityTime: 6000, });
       return;
     }
     setIsLoading(true);
@@ -49,7 +50,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
       // 3. NÃO há mais navigation.navigate() aqui. A navegação é automática.
 
     } catch (err: any) {
-      Alert.alert("Falha no Login", err.response?.data?.message || "Credenciais inválidas.");
+      Toast.show({type: 'error', text1: err.response?.data?.message || "Credenciais inválidas.",  position: 'bottom', visibilityTime: 6000, });
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +63,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         style={styles.keyboardView}
       >
         <View style={globalStyles.container}>
-          <Text style={globalStyles.title}>Bem-vindo de Volta!</Text>
+          <Text style={globalStyles.title}>Bem-vindo!</Text>
           <Text style={globalStyles.subtitle}>Faça login para continuar</Text>
 
           <TextInput

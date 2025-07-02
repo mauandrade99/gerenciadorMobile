@@ -40,15 +40,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsAdmin(userProfile.role === 'ROLE_ADMIN');
       setToken(currentToken);
     } catch (error) {
-      console.error("Falha ao carregar usuário a partir do token:", error);
       await AsyncStorage.removeItem('authToken');
       setToken(null);
       setUser(null);
       setIsAdmin(false);
     }
   }, []);
-
-  console.log('[AuthProvider] Montado. isLoading:', isLoading, 'token:', token);
 
   // Efeito para verificar o token no armazenamento ao iniciar o app
   useEffect(() => {
@@ -78,21 +75,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log('[AuthProvider] Logout chamado.');
+
     try {
       await AsyncStorage.removeItem('authToken');
-      console.log('[AuthProvider] Token removido do AsyncStorage.');
-      
-      // Força a atualização dos estados de forma explícita e imediata
+
       setToken(null);
       setUser(null);
       setIsAdmin(false);
-      
-      console.log('[AuthProvider] Estados de autenticação resetados.');
+
     } catch (error) {
       console.error("AuthProvider: Falha ao remover token do AsyncStorage", error);
     }
-    // Não precisamos mais do 'finally' aqui, pois a lógica principal está no 'try'
+
   };
 
   const value = {
