@@ -6,7 +6,7 @@ import { Picker } from '@react-native-picker/picker'; // Usaremos o Picker padr�
 import { Colors, globalStyles } from '../../theme/appStyles';
 import type { User, UserUpdatePayload } from '../../types';
 import { updateUser } from '../../services/userService';
-import Toast from 'react-native-toast-message';
+import { showErrorToast } from '../../theme/toastHelper'; 
 
 interface UserEditModalProps {
   visible: boolean;
@@ -29,7 +29,7 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
 
   const handleSubmit = async () => {
     if (!userToEdit || !nome) {
-      Toast.show({type: 'error', text1: "O nome do usuário é obrigatório.",});
+      showErrorToast('O nome do usuário é obrigatório.');
       return;
     }
     setIsSaving(true);
@@ -38,7 +38,7 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
       await updateUser(userToEdit.id, payload);
       onSuccess();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível atualizar o usuário.", });
+      showErrorToast('Não foi possível atualizar o usuário.');
     } finally {
       setIsSaving(false);
     }
@@ -86,7 +86,7 @@ const UserEditModal = ({ visible, userToEdit, onClose, onSuccess }: UserEditModa
 
 // Estilos locais para o modal
 const styles = StyleSheet.create({
-  centeredView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
+  centeredView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.1)' },
   modalView: { width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20, alignItems: 'center' },
   modalTitle: { ...globalStyles.title, fontSize: 22, marginBottom: 20 },
   label: { alignSelf: 'flex-start', color: Colors.subtleText, marginBottom: 5, marginLeft: 5 },

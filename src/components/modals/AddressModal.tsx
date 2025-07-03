@@ -5,7 +5,7 @@ import {
 import { Colors, globalStyles } from '../../theme/appStyles';
 import type { Address, AddressPayload } from '../../types';
 import { createAddress, updateAddress, getAddressByCep } from '../../services/addressService';
-import Toast from 'react-native-toast-message';
+import { showErrorToast } from '../../theme/toastHelper'; 
 
 interface AddressModalProps {
   visible: boolean;
@@ -43,7 +43,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
         if (data.erro) throw new Error();
         setFormData(prev => ({ ...prev, logradouro: data.logradouro, bairro: data.bairro, cidade: data.localidade, estado: data.uf }));
       } catch (error) {
-        Toast.show({type: 'error', text1: "CEP não encontrado.", });
+        showErrorToast('CEP não encontrado');
       } finally {
         setIsCepLoading(false);
       }
@@ -52,7 +52,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
 
   const handleSubmit = async () => {
     if (!userId || !formData.cep || !formData.numero) {
-      Toast.show({type: 'error', text1: "CEP e Número são obrigatórios.", });
+      showErrorToast('CEP e Número são obrigatórios.');
       return;
     }
     setIsSaving(true);
@@ -65,7 +65,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
       }
       onSuccess();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível salvar o endereço.", });
+      showErrorToast('Não foi possível salvar o endereço.');
     } finally {
       setIsSaving(false);
     }
@@ -126,7 +126,7 @@ const AddressModal = ({ visible, userId, addressToEdit, onClose, onSuccess }: Ad
 
 // Estilos locais para o modal
 const styles = StyleSheet.create({
-  centeredView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' },
+  centeredView: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.1)' },
   modalView: { width: '90%', maxHeight: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20, alignItems: 'center' },
   modalTitle: { ...globalStyles.title, fontSize: 22, marginBottom: 20 },
   label: { alignSelf: 'flex-start', color: Colors.subtleText, marginBottom: 5, marginLeft: 5 },

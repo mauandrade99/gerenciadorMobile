@@ -3,11 +3,11 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, 
 import type { User, Address } from '../../types';
 import { Colors } from '../../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Toast from 'react-native-toast-message';
+import { showErrorToast } from '../../theme/toastHelper'; 
 
 import { deleteAddress } from '../../services/addressService';
 import ConfirmModal from '../modals/ConfirmModal';
-import AddressModal from '../modals/AddressModal'; // Importe o novo modal
+import AddressModal from '../modals/AddressModal'; 
 
 interface AddressesPanelProps {
   selectedUser: User | null;
@@ -51,7 +51,7 @@ const AddressesPanel = ({ selectedUser, addresses, isLoading, onRefresh }: Addre
       closeDeleteModal();
       onRefresh();
     } catch (error) {
-      Toast.show({ type: 'error', text1: 'Não foi possível excluir o endereço.', });
+      showErrorToast('Não foi possível excluir o endereço.');
       closeDeleteModal();
     }
   };
@@ -79,7 +79,7 @@ const AddressesPanel = ({ selectedUser, addresses, isLoading, onRefresh }: Addre
       <View style={styles.panel}>
         <View style={styles.header}>
           <Text style={styles.panelTitle}>
-            Endereços de: {selectedUser ? selectedUser.nome : '...'}
+            Endereços de: {selectedUser ? selectedUser.nome : ''}
           </Text>
           {selectedUser && (
             <TouchableOpacity style={styles.iconButton} onPress={openAddModal}>

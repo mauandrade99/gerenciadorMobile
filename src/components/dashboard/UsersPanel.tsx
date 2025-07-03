@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator, 
 import type { User, Page } from '../../types';
 import { Colors } from '../../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Toast from 'react-native-toast-message';
+import { showErrorToast } from '../../theme/toastHelper'; 
 
 import { deleteUser } from '../../services/userService';
 import ConfirmModal from '../modals/ConfirmModal';
@@ -40,7 +40,7 @@ const UsersPanel = ({ usersPage, isLoading, selectedUserId, onSelectUser, onRefr
       closeDeleteModal();
       onRefresh();
     } catch (error) {
-      Toast.show({type: 'error', text1: "Não foi possível excluir o usuário.", });
+      showErrorToast('Não foi possível excluir o usuário.');
       closeDeleteModal();
     }
   };

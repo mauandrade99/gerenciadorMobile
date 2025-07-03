@@ -77,7 +77,7 @@ const DashboardScreen = () => {
       <View style={styles.container}>
         {isAdmin ? (
           <>
-            <View style={styles.panelContainer}>
+            <View style={styles.usersPanelContainer}>
               <UsersPanel
                 usersPage={usersPage}
                 isLoading={isLoadingUsers}
@@ -87,7 +87,7 @@ const DashboardScreen = () => {
                 loggedInUserId={loggedInUser?.id}
               />
             </View>
-            <View style={styles.panelContainer}>
+            <View style={styles.addressesPanelContainer}>
               <AddressesPanel
                 selectedUser={selectedUser}
                 addresses={addresses}
@@ -134,6 +134,14 @@ const styles = StyleSheet.create({
   },
   panelContainer: {
     flex: 1, 
+  },
+  usersPanelContainer: {
+    flex: 6.5, 
+    borderRightWidth: 1, 
+    borderColor: Colors.border,
+  },
+  addressesPanelContainer: {
+    flex: 3.5, 
   },
   logoutButton: {
     padding: 8, 

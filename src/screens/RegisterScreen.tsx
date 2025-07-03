@@ -7,7 +7,7 @@ import { globalStyles, Colors } from '../theme/appStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useAuth } from '../hooks/useAuth';
 import { registerUser } from '../services/authService';
-import Toast from 'react-native-toast-message';
+import { showErrorToast } from '../theme/toastHelper'; 
 
 type RegisterScreenProps = {
   navigation: {
@@ -30,18 +30,18 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
 
   const handleRegister = async () => {
     if (!nome || !email || !senha || !confirmarSenha) {
-      Toast.show({type: 'error', text1: "Todos os campos são obrigatórios.", });
+      showErrorToast("Todos os campos são obrigatórios.");
       return;
     }
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      Toast.show({ type: 'error', text1: 'Por favor, insira um formato de email válido.', });
+      showErrorToast('Por favor, insira um formato de email válido.');
       return;
     }
 
     if (senha !== confirmarSenha) {
-      Toast.show({type: 'error', text1: "As senhas não coincidem.", });
+      showErrorToast("As senhas não coincidem.");
       return;
     }
 
@@ -50,7 +50,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
       const data = await registerUser({ nome, email, senha });
       await auth.login(data.token);
     } catch (err: any) {
-      Toast.show({type: 'error', text1: err.response?.data?.message || "Não foi possível criar a conta.", });
+      showErrorToast(err.response?.data?.message || "Não foi possível criar a conta.");
     } finally {
       setIsLoading(false);
     }

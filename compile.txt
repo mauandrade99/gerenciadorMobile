@@ -5,21 +5,28 @@ git remote add origin https://github.com/mauandrade99/gerenciadorMobile
 cd\JavaProjects\GerenciadorMobile
 git init
 git add .
-git commit -m "GerenciadorMobile development 1.0"
+git commit -m "App Crud release 1.0"
 git branch -M main
 git push -u origin main
 
-cd\JavaProjects\GerenciadorMobile
 
+*** Rodar Metro ***
+cd\JavaProjects\GerenciadorMobile
 npm start
 
-cd android
+*** Rodar Metro com limpeza de cache ***
+
+cd\JavaProjects\GerenciadorMobile\android
 gradlew.bat clean
 cd..
 npm start -- --reset-cache
 
+** Compilar APk ****
+
 cd\JavaProjects\GerenciadorMobile\android
 gradlew.bat assembleRelease
+
+** Rodar Localmente **
 
 cd\JavaProjects\GerenciadorMobile\android
 npm run android
